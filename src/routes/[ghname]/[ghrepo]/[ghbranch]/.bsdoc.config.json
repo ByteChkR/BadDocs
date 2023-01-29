@@ -1,0 +1,53 @@
+{
+	"Meta": {
+		"Title": "System Library Reference",
+		"Version": "2023.1.29.0"
+	},
+	"Source": "/.bsdoc.json",
+	"Options": {
+		"SideBar": {
+			"Enabled": true,
+			"Width": "250px",
+			"Position": "left"
+		},
+		"Header": {
+			"Enabled": true,
+			"ShowLogo": false,
+			"ShowTitle": true,
+			"ShowVersion": true,
+			"Height": "100px",
+			"Logo": "/logo.png"
+		},
+		"Documentation": {}
+	},
+	"Style": {
+		"SideBar": {
+			"Background": "#FFFFFF",
+			"ExpandButton": {
+				"ButtonStyle": "none",
+				"Background": "inherit",
+				"Foreground": "inherit",
+				"Border": "none",
+				"Hover": {
+					"Background": "inherit",
+					"Foreground": "inherit",
+					"Border": "solid 1px #000000"
+				}
+			}
+		},
+		"Header": {
+			"Background": "#FFFFFF",
+			"Title": {
+				"Background": "inherit",
+				"Foreground": "#000000"
+			},
+			"Version": {
+				"Background": "inherit",
+				"Foreground": "#000000"
+			}
+		},
+		"Documentation": {
+			"Background": "#FFFFFF"
+		}
+	}
+}
