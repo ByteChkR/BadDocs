@@ -50,8 +50,8 @@
 </script>
 
 <tr bind:this={header}>
-    <td>{GetFunctionName()}</td>
-    <td>
+    <td class="baddoc-style baddoc-style-border">{GetFunctionName()}</td>
+    <td class="baddoc-style baddoc-style-border">
         <p class="description">Description: {property.Description}</p>
         <p class="return">Returns: {property.Return}</p>
         {#if property.Parameters.length > 0}
@@ -67,7 +67,6 @@
 <style>
     
     td {
-        border: 1px solid black;
         padding: 5px;
     }
 

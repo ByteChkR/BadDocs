@@ -35,8 +35,8 @@
         <h2>Properties</h2>
         <table>
             <tr>
-                <th>Name</th>
-                <th>Value</th>
+                <th class="baddoc-style baddoc-style-border">Name</th>
+                <th class="baddoc-style baddoc-style-border">Value</th>
             </tr>
             {#each data.Properties as property}
                 {#if property.Type != "class-definition-base"}
@@ -53,7 +53,6 @@
         width: 100%;
     }
     th {
-        border: 1px solid black;
         padding: 5px;
     }
 </style>

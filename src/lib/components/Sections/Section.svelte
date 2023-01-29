@@ -27,8 +27,8 @@
 
 </script>
 
-<div style="padding: 25px; margin-left: {level * 15}px; border: solid 1px black; border-radius: 25px;">
-    <div bind:this={header} style="width: 100%; display: flex; border-bottom: 1px solid black; padding-bottom: 5px;">
+<div class="baddoc-style-border" style="padding: 25px; margin-left: {level * 15}px; border-radius: 25px;">
+    <div class="baddoc-style-border-bottom" bind:this={header} style="width: 100%; display: flex; border-bottom: 1px solid black; padding-bottom: 5px;">
         <h1 style="flex-grow: 1;">{data.SectionName}</h1>
         <button style="flex-grow: 0;" on:click={() => expanded = !expanded}>{expanded ? "Collapse":"Expand"}</button>
     </div>

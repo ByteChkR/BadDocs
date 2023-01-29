@@ -3,7 +3,7 @@
 		"Title": "System Library Reference",
 		"Version": "2023.1.29.0"
 	},
-	"Source": "/.bsdoc.json",
+	"Source": ".bsdoc.json",
 	"Options": {
 		"SideBar": {
 			"Enabled": true,
@@ -21,33 +21,16 @@
 		"Documentation": {}
 	},
 	"Style": {
-		"SideBar": {
-			"Background": "#FFFFFF",
-			"ExpandButton": {
-				"ButtonStyle": "none",
-				"Background": "inherit",
-				"Foreground": "inherit",
-				"Border": "none",
-				"Hover": {
-					"Background": "inherit",
-					"Foreground": "inherit",
-					"Border": "solid 1px #000000"
-				}
-			}
+		"Default": {
+			"Primary": "000000",
+			"Secondary": "8f8f8f",
+			"Border": "000000"
 		},
-		"Header": {
-			"Background": "#FFFFFF",
-			"Title": {
-				"Background": "inherit",
-				"Foreground": "#000000"
-			},
-			"Version": {
-				"Background": "inherit",
-				"Foreground": "#000000"
-			}
-		},
-		"Documentation": {
-			"Background": "#FFFFFF"
+		"Light": {},
+		"Dark": {
+			"Primary": "FFFFFF",
+			"Secondary": "1f1f1f",
+			"Border": "FFFFFF"
 		}
 	}
 }

@@ -21,8 +21,8 @@
 </script>
 
 <tr bind:this={header}>
-    <td>{property.Name}</td>
-    <td>{property.Value}</td>
+    <td class="baddoc-style baddoc-style-border">{property.Name}</td>
+    <td class="baddoc-style baddoc-style-border">{property.Value}</td>
 </tr>
 
 
