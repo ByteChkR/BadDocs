@@ -33,15 +33,21 @@ async function loadSource(useTestData, fetch, config, getUrl)
         Sections: [],
         Properties: []
     }
-    config.Sources.forEach(async (src) => {
+    console.log("Sources: ", config.Sources);
+
+    for (let i = 0; i < config.Sources.length; i++) {
+        const src = config.Sources[i];
         const response = await fetch(getUrl(src));
         if (!response.ok) {
             throw new Error(response.statusText);
         }
         const data = await response.text();
-        source.Sections.push(JSON.parse(data));
-    });
-    return config;
+        console.log("Loaded Source:", src);
+        source.Sections.push(JSON.parse(data));   
+    }
+
+    console.log("Source: ", source);
+    return source;
 }
 
 /** @type {import('./$types').PageLoad} */
@@ -55,6 +61,6 @@ export function load({ url, params, fetch }) {
 
     const task = loadConfig(useTestData, fetch, file, getUrl);
 
-    return { name: params.ghname, repo: params.ghrepo, branch: params.ghbranch, config: task, style: style };
+    return { name: params.ghname, repo: params.ghrepo, branch: params.ghbranch, config: task, style: style, getUrl: getUrl };
 
 }
