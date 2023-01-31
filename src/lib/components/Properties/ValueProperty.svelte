@@ -13,7 +13,12 @@
             parent.Expand();
             setTimeout(() => header?.scrollIntoView({behavior : "smooth"}), 100);
         },
-        Expand: parent.Expand
+        Expand: parent.Expand,
+        GetPath: () => {
+            const parentPath = parent.GetPath();
+            if(parentPath == "")return property.Name;
+            return `${parentPath}.${property.Name}`;
+        }
     }
 
     navigationContext.Register(element, parent);

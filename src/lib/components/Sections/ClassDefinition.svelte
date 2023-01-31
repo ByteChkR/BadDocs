@@ -1,9 +1,14 @@
 <script>
+    import {getContext} from "svelte";
 	import Section from "./Section.svelte";
     import Property from "../Properties/Property.svelte";
     export let data;
     export let level = 0;
     export let parent;
+
+
+    const navigationContext = getContext("navigationContext");
+
     function GetBaseClass() {
         let baseClass = null;
         for (let i = 0; i < data.Properties.length; i++) {
@@ -16,11 +21,28 @@
     }
 
     let baseClass = GetBaseClass();
+
+
+    function NavigateToPath(path)
+    {
+        console.log("Navigating to : " + path);
+        const elem = navigationContext.GetByPath(parent, path);
+        if(elem == null)
+        {
+            console.log("Could not find element with path: " + path);
+            return;
+        }
+        elem.Navigate();
+    }
+
+    
+
 </script>
 
 
+<p>{data.Description ?? ''}</p>
 {#if baseClass != null}
-<p>Base Class: {baseClass.ClassName}</p>
+    <p>Base Class: <a href="#" on:click={() => NavigateToPath(baseClass.ClassName)}>{baseClass.ClassName}</a></p>
 {/if}
 {#if data.Sections.length > 0}
     <div>

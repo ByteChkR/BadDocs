@@ -1,31 +1,19 @@
- 
-import testData from './.bsdoc.json'
-import testConfig from './.bsdoc.config.json'
-async function loadConfig(useTestData, fetch, configPath, getUrl) {
-    let conf = null;
-    if(useTestData)
-    {
-        conf = { ...testConfig };
-    }
-    else
-    {
-        const response = await fetch(getUrl(configPath));
-        if (!response.ok) {
-            throw new Error(response.statusText);
-        }
-        conf = await response.json();
-    }
 
-    conf.Source = await loadSource(useTestData, fetch, conf, getUrl);
+async function loadConfig(fetch, configPath, getUrl) {
+    let conf = null;
+    const url = getUrl(configPath);
+    const response = await fetch(url);
+    if (!response.ok) {
+        console.error(url, response.statusText);
+        return {};
+    }
+    conf = await response.json();
+    conf.Source = await loadSource(fetch, conf, getUrl);
     return conf;
 }
 
-async function loadSource(useTestData, fetch, config, getUrl)
+async function loadSource(fetch, config, getUrl)
 {
-    if(useTestData)
-    {
-        return testData;
-    }
 
     const source = {
         SectionName: config.Meta.Title,
@@ -35,15 +23,35 @@ async function loadSource(useTestData, fetch, config, getUrl)
     }
     console.log("Sources: ", config.Sources);
 
-    for (let i = 0; i < config.Sources.length; i++) {
+    if('Sources' in config)
+    for (let i = 0; i < config.Sources.length; i++)
+    {
         const src = config.Sources[i];
-        const response = await fetch(getUrl(src));
+        const url = getUrl(src);
+        const response = await fetch(url);
         if (!response.ok) {
-            throw new Error(response.statusText);
+            console.error(url, response.statusText);
+            continue;
         }
         const data = await response.text();
         console.log("Loaded Source:", src);
         source.Sections.push(JSON.parse(data));   
+    }
+
+    if('InjectSources' in config)
+    for (let i = 0; i < config.InjectSources.length; i++)
+    {
+        const src = config.InjectSources[i];
+        const url = getUrl(src);
+        const response = await fetch(url);
+        if (!response.ok) {
+            console.error(url, response.statusText);
+            continue;
+        }
+        const data = JSON.parse(await response.text());
+        console.log("Loaded Inject Source:", src);
+        data.Sections.forEach(s => source.Sections.push(s));
+        data.Properties.forEach(p => source.Properties.push(p));
     }
 
     console.log("Source: ", source);
@@ -53,13 +61,12 @@ async function loadSource(useTestData, fetch, config, getUrl)
 /** @type {import('./$types').PageLoad} */
 export function load({ url, params, fetch }) {
  
-    const useTestData = url.searchParams.get('test') === 'true';
     const file = url.searchParams.get('config') || '.bsdoc.config.json';
     const style = url.searchParams.get('style') || 'Default';
 
     const getUrl = (fileName) => `https://raw.githubusercontent.com/${params.ghname}/${params.ghrepo}/${params.ghbranch}/${fileName}`;
 
-    const task = loadConfig(useTestData, fetch, file, getUrl);
+    const task = loadConfig(fetch, file, getUrl);
 
     return { name: params.ghname, repo: params.ghrepo, branch: params.ghbranch, config: task, style: style, getUrl: getUrl };
 

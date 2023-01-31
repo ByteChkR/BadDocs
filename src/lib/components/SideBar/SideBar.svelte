@@ -11,12 +11,14 @@
     expanded = isRoot;
 </script>
 {#if !isRoot}
-    {#if !isProperty && (data.Sections.length > 0 || data.Properties.length > 0)}
-        <button class="baddoc-style baddoc-style-border-hover" style="border: none; width: 26px; height: 26px;" on:click={() => expanded = !expanded}>{expanded?"-":"+"}</button>
-    {/if}
-    <button class="baddoc-style baddoc-style-border-hover" style="border: none; height: 26px;" on:click={() => {
-        navigationContext.Navigate(data);
-    }}>{isProperty ? data.Name : data.SectionName}</button>
+    <div style="display: flex; flex-direction: row;">
+        {#if !isProperty && (data.Sections.length > 0 || data.Properties.length > 0)}
+            <button class="baddoc-style baddoc-style-border-hover" style="flex-shrink: 0; flex-grow: 0; border: none; width: 26px; height: 26px;" on:click={() => expanded = !expanded}>{expanded?"-":"+"}</button>
+        {/if}
+        <button class="baddoc-style baddoc-style-border-hover" style="border: none; height: 26px;" on:click={() => {
+            navigationContext.Navigate(data);
+        }}>{isProperty ? data.Name : data.SectionName}</button>
+    </div>
 {/if}
 {#if !isProperty}
     <ul style="{expanded ?"":"display: none;"} margin-top: 5px;">

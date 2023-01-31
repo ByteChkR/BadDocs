@@ -4,7 +4,7 @@
     import Namespace from "./Namespace.svelte";
     export let data;
     export let level = 0;
-    export let parent = { Navigate: () => {}, Expand: () => {}};
+    export let parent = { Navigate: () => {}, Expand: () => {}, GetPath: () => ""};
     export let isRoot = false;
     let expanded = false;
     let header = null;
@@ -21,19 +21,21 @@
         Expand: () => {
             parent.Expand();
             expanded = true;
+        },
+        GetPath: () => {
+            const parentPath = parent.GetPath();
+            if(parentPath == "")return data.SectionName;
+            return `${parentPath}.${data.SectionName}`;
         }
     }
-
-    if(!isRoot)
-        navigationContext.Register(element, parent);
-        else console.log(data);
-
+    navigationContext.Register(element, parent);
+        
 </script>
 {#if isRoot}
     {#if data.Sections.length > 0}
         {#each data.Sections as section}
             <div style="margin-bottom: 5px;">
-                <svelte:self {parent} data={section} level={level+1}></svelte:self>
+                <svelte:self parent={element} data={section} level={level+1}></svelte:self>
             </div>
         {/each}
     {:else}

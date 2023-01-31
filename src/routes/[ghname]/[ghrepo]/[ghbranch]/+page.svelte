@@ -17,10 +17,15 @@
     setContext("docContext", docContext);
 
     const elements = [];
-
     
+    function GetElement(elem)
+    {
+        return elements.find(x=>x.element == elem);
+    }
+
     const navigationContext = {
         Register: (elem, parent) => {
+            console.log("Register Element", elem.GetPath());
             elements.push({element: elem, parent: parent});
         },
         Navigate: (data) => {
@@ -33,13 +38,42 @@
             {
                 console.log("Could not find element", data);
             }
+        },
+        GetByPath: (element, path) => {
+            const elem = elements.find(x=>{
+                return x.element.GetPath() == path;
+            });
+            if(elem)
+            {
+                return elem.element;
+            }
+            else
+            {
+                //path is maybe not fully qualified.
+                //Find the closest parent that matches the start of the path.
+                let current = element;
+                while(current != null)
+                {
+                    const cPath = current.GetPath();
+                    let p = path;
+                    if(cPath != "") p = cPath + "." + path;
+                    const elem = elements.find(x=>{
+                        return x.element.GetPath() == p;
+                    });
+                    if(elem)
+                    {
+                        return elem.element;
+                    }
+                    const nextCur = GetElement(current);
+                    if(nextCur == null) break;
+                    current = nextCur.parent;
+                }
+                
+            }
         }
     }
 
     setContext("navigationContext", navigationContext);
-
-
-    console.log(data);
 
     let sideBarWidth = "0px";
     if(data.config.Options.SideBar.Enabled)
@@ -52,8 +86,6 @@
         let style = `<style>.baddoc-style-border-right { border-right: 1px solid #${styleConfig.Border} !important; } .baddoc-style-border-bottom { border-bottom: 1px solid #${styleConfig.Border} !important; } .baddoc-style-border-hover:hover { border: 1px solid #${styleConfig.Border} !important; }  .baddoc-style-border { border: 1px solid #${styleConfig.Border} !important; } .baddoc-style { color: #${styleConfig.Primary}; background-color: #${styleConfig.Secondary}; } </style>`;
         return style;
     }
-
-    console.log(data);
 
 </script>
 {@html GenerateStyle($styleConfig)}
