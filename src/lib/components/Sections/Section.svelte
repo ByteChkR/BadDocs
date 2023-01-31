@@ -30,7 +30,7 @@
 <div class="baddoc-style-border" style="padding: 25px; margin-left: {level * 15}px; border-radius: 25px;">
     <div class="baddoc-style-border-bottom" bind:this={header} style="width: 100%; display: flex; border-bottom: 1px solid black; padding-bottom: 5px;">
         <h1 style="flex-grow: 1;">{data.SectionName}</h1>
-        <button style="flex-grow: 0;" on:click={() => expanded = !expanded}>{expanded ? "Collapse":"Expand"}</button>
+        <button class="baddoc-style-border-hover baddoc-style" style="border: none; flex-grow: 0; width: 96px; height: 96px;" on:click={() => expanded = !expanded}>{expanded ? "-":"+"}</button>
     </div>
     <div style="{expanded?"":"display: none;"}">
         {#if data.SectionType == "namespace"}   

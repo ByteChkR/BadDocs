@@ -15,6 +15,7 @@ async function loadConfig(useTestData, fetch, configPath, getUrl) {
         }
         conf = await response.json();
     }
+
     conf.Source = await loadSource(useTestData, fetch, conf, getUrl);
     return conf;
 }
@@ -26,12 +27,21 @@ async function loadSource(useTestData, fetch, config, getUrl)
         return testData;
     }
 
-    const response = await fetch(getUrl(config.Source));
-    if (!response.ok) {
-        throw new Error(response.statusText);
+    const source = {
+        SectionName: config.Meta.Title,
+        SectionType: "namespace",
+        Sections: [],
+        Properties: []
     }
-    const data = await response.text();
-    return await JSON.parse(data);
+    config.Sources.forEach(async (src) => {
+        const response = await fetch(getUrl(src));
+        if (!response.ok) {
+            throw new Error(response.statusText);
+        }
+        const data = await response.text();
+        source.Sections.push(JSON.parse(data));
+    });
+    return config;
 }
 
 /** @type {import('./$types').PageLoad} */

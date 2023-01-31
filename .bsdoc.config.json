@@ -3,7 +3,9 @@
 		"Title": "System Library Reference",
 		"Version": "2023.1.29.0"
 	},
-	"Source": ".bsdoc.json",
+	"Sources": [
+		".bsdoc.json"
+	],
 	"Options": {
 		"SideBar": {
 			"Enabled": true,
@@ -12,7 +14,7 @@
 		},
 		"Header": {
 			"Enabled": true,
-			"ShowLogo": false,
+			"ShowLogo": true,
 			"ShowTitle": true,
 			"ShowVersion": true,
 			"Height": "100px",
@@ -23,7 +25,7 @@
 	"Style": {
 		"Default": {
 			"Primary": "000000",
-			"Secondary": "8f8f8f",
+			"Secondary": "FFFFFF",
 			"Border": "000000"
 		},
 		"Light": {},
